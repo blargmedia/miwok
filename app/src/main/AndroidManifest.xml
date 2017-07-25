@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2016 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!--
+ Copyright (C) 2016 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.miwok">
+    package="ca.blargmedia.miwok">
 
     <application
         android:allowBackup="true"
@@ -29,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ca.blargmedia.miwok.NumbersActivity" />
+        <activity android:name="ca.blargmedia.miwok.PhrasesActivity" />
+        <activity android:name="ca.blargmedia.miwok.FamilyActivity" />
+        <activity android:name="ca.blargmedia.miwok.ColoursActivity"></activity>
     </application>
 
 </manifest>
