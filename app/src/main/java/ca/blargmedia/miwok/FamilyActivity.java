@@ -11,7 +11,7 @@ public class FamilyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family);
+        setContentView(R.layout.word_list);
 
         ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("father", "әpә"));
@@ -28,7 +28,7 @@ public class FamilyActivity extends AppCompatActivity {
         // use a listview for the number words
         WordAdapter itemsAdapter = new WordAdapter(this, words);
 
-        ListView listView = (ListView) findViewById(R.id.list_family);
+        ListView listView = (ListView) findViewById(R.id.word_list);
 
         listView.setAdapter(itemsAdapter);
 
