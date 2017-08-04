@@ -37,8 +37,12 @@ public class WordAdapter extends ArrayAdapter<Word> {
         Word currentWord = getItem(position);
 
         ImageView iconImageView = (ImageView) listItemView.findViewById(R.id.icon_image_view);
-        if (iconImageView != null) {
+        if (currentWord.hasImage()) {
             iconImageView.setImageResource(currentWord.getImageResourceId());
+            iconImageView.setVisibility(View.VISIBLE);
+        }
+        else {
+            iconImageView.setVisibility(View.GONE);
         }
 
         // Find the TextView in the list_item.xml layout with the miwok word
