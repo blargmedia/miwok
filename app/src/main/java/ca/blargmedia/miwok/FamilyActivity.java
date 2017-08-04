@@ -26,7 +26,7 @@ public class FamilyActivity extends AppCompatActivity {
         words.add(new Word("grandfather", "paapa", R.drawable.family_grandfather));
 
         // use a listview for the number words
-        WordAdapter itemsAdapter = new WordAdapter(this, words);
+        WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_family);
 
         ListView listView = (ListView) findViewById(R.id.word_list);
 

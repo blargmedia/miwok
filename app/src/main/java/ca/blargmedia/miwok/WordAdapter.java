@@ -1,6 +1,7 @@
 package ca.blargmedia.miwok;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,15 @@ import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    public WordAdapter (Activity context, ArrayList<Word> words)  {
+    private int listColor;
+
+    public WordAdapter (Activity context, ArrayList<Word> words, int colour)  {
         // initialize the ArrayAdapter's internal storage for the context and the list.
         // 2nd arg is used when the ArrayAdapter is populating a single TextView.
         // Because this is a custom adapter for two TextViews, the adapter is not
         // going to use this second argument, so it can be any value. Here, we used 0.
         super(context, 0, words);
+        listColor = colour;
     }
 
     @Override
@@ -52,6 +56,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
         // Find the TextView in the list_item.xml layout with the default word
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.default_text_view);
         defaultTextView.setText(currentWord.getDefaultTranslation());
+
+        View textViews = listItemView.findViewById(R.id.word_views);
+        int colour = ContextCompat.getColor(getContext(),listColor);
+        textViews.setBackgroundColor(colour);
 
         // Return the whole list item layout (with 2 TextViews) so that it can be shown in the ListView
         return listItemView;
