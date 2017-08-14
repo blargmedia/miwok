@@ -21,10 +21,10 @@ public class Word {
 
     }
 
-    public Word (String d, String m, int i) {
+    public Word (String d, String m, int a) {
         defaultTranslation = d;
         miwokTranslation = m;
-        imageResourceId = i;
+        audioResourceId = a;
     }
 
     public Word (String d, String m, int i, int a) {
