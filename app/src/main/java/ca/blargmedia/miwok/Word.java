@@ -7,9 +7,13 @@ package ca.blargmedia.miwok;
 public class Word {
 
     private static final int NO_IMAGE = -1;
+    private static final int NO_AUDIO = -1;
+
     private String defaultTranslation;
     private String miwokTranslation;
+
     private int imageResourceId = NO_IMAGE;
+    private int audioResourceId = NO_AUDIO;
 
     public Word (String d, String m) {
         defaultTranslation = d;
@@ -21,6 +25,13 @@ public class Word {
         defaultTranslation = d;
         miwokTranslation = m;
         imageResourceId = i;
+    }
+
+    public Word (String d, String m, int i, int a) {
+        defaultTranslation = d;
+        miwokTranslation = m;
+        imageResourceId = i;
+        audioResourceId = a;
     }
 
     public String getDefaultTranslation() {
@@ -36,5 +47,9 @@ public class Word {
     public boolean hasImage() {
         return (imageResourceId != NO_IMAGE);
     }
+
+    public int getAudioResourceId() { return audioResourceId; }
+
+    public boolean hasAudio() { return (audioResourceId != NO_AUDIO); }
 
 }
