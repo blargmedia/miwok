@@ -52,4 +52,13 @@ public class Word {
 
     public boolean hasAudio() { return (audioResourceId != NO_AUDIO); }
 
+    @Override
+    public String toString() {
+        return "Word{" +
+                "defaultTranslation='" + defaultTranslation + '\'' +
+                ", miwokTranslation='" + miwokTranslation + '\'' +
+                ", imageResourceId=" + imageResourceId +
+                ", audioResourceId=" + audioResourceId +
+                '}';
+    }
 }
