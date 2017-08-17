@@ -40,11 +40,33 @@ public class ColoursActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                // release player in case it's active
+                releaseMediaPlayer();
+
                 // use the position to find the right audio file
                 mp = MediaPlayer.create(ColoursActivity.this, words.get(position).getAudioResourceId());
                 mp.start();
+
+                // release player when done
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        releaseMediaPlayer();
+                    }
+                });
             }
         });
 
     }
+
+    // helper to clean up media player by releasing its resources
+    private void releaseMediaPlayer() {
+
+        // check whether the media player might be currently playing a sound
+        if (mp != null) {
+            mp.release(); // release if in use
+            mp = null; // using null to indicate media player is not currently playing
+        }
+    }
+
 }
