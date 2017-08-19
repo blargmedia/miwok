@@ -30,12 +30,16 @@
             </intent-filter>
         </activity>
         <activity android:name="ca.blargmedia.miwok.NumbersActivity"
+            android:parentActivityName="ca.blargmedia.miwok.MainActivity"
             android:label="@string/category_numbers"/>
         <activity android:name="ca.blargmedia.miwok.PhrasesActivity"
+            android:parentActivityName="ca.blargmedia.miwok.MainActivity"
             android:label="@string/category_phrases"/>
         <activity android:name="ca.blargmedia.miwok.FamilyActivity"
+            android:parentActivityName="ca.blargmedia.miwok.MainActivity"
             android:label="@string/category_family"/>
         <activity android:name="ca.blargmedia.miwok.ColoursActivity"
+            android:parentActivityName="ca.blargmedia.miwok.MainActivity"
             android:label="@string/category_colors"/>
     </application>
 
