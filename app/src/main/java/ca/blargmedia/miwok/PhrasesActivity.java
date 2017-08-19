@@ -1,5 +1,7 @@
 package ca.blargmedia.miwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +15,34 @@ public class PhrasesActivity extends AppCompatActivity {
 
     private MediaPlayer mp;
 
+    private AudioManager am;
+
+    private AudioManager.OnAudioFocusChangeListener afcl = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT: // pause
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    mp.pause();
+                    mp.seekTo(0); // restart playing from beginning of translation
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS: // stop
+                    releaseMediaPlayer();
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN: // resume
+                    mp.start();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
+
+        // init audio manager to system audio service
+        am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         final ArrayList<Word> words = new ArrayList<Word>();
         words.add(new Word("Where are you going?", "minto wuksus", R.raw.phrase_where_are_you_going));
@@ -45,17 +71,22 @@ public class PhrasesActivity extends AppCompatActivity {
                 // release player in case it's active
                 releaseMediaPlayer();
 
-                // use the position to find the right audio file
-                mp = MediaPlayer.create(PhrasesActivity.this, words.get(position).getAudioResourceId());
-                mp.start();
+                // request audio focus from system
+                int amFocus = am.requestAudioFocus(afcl, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                if (amFocus == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
-                // release player when done
-                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        releaseMediaPlayer();
-                    }
-                });
+                    // use the position to find the right audio file
+                    mp = MediaPlayer.create(PhrasesActivity.this, words.get(position).getAudioResourceId());
+                    mp.start();
+
+                    // release player when done
+                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            releaseMediaPlayer();
+                        }
+                    });
+                }
             }
         });
 
@@ -75,6 +106,7 @@ public class PhrasesActivity extends AppCompatActivity {
         if (mp != null) {
             mp.release(); // release if in use
             mp = null; // using null to indicate media player is not currently playing
+            am.abandonAudioFocus(afcl); // also release audio focus
         }
     }
 
